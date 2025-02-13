@@ -16,6 +16,8 @@ class TestUserInfo:
 
         assert response.status_code == 200
         assert response.json().get("success") is True
+        assert response.json().get("user")["email"] == user["email"]
+
 
     @allure.title("Успешное изменение юзером информации о себе, если он авторизован")
     def test_update_user_info_with_auth(self):
@@ -28,6 +30,7 @@ class TestUserInfo:
 
         assert response.status_code == 200
         assert response.json().get("success") is True
+        assert response.json().get("user")["name"] == "NewName"
 
     @allure.title("Успешное изменение юзером информации о себе, если он неавторизован")
     def test_update_user_info_without_auth(self):
@@ -36,3 +39,4 @@ class TestUserInfo:
 
         assert response.status_code == 401
         assert response.json().get("success") is False
+        assert response.json().get("message") == "You should be authorised"

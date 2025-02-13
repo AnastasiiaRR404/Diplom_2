@@ -29,4 +29,6 @@ class TestAuthorization:
 
         assert response.status_code == 401
         assert response.json().get("success") is False
+        assert response.json().get("message") == "email or password are incorrect"
+
 

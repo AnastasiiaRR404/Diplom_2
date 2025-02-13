@@ -54,7 +54,8 @@ class TestCreateOrder:
             json={"ingredients": []}
         )
 
-        assert response.status_code == 400
+        assert response.status_code == 400,f"Unexpected status: {response.text}"
+        assert response.json().get("message") == "Ingredient ids must be provided"
     @allure.title("Создание заказа с невалидным ингредиентом")
     def test_create_order_with_invalid_ingredient(self):
         access_token = self.get_access_token()
@@ -65,4 +66,5 @@ class TestCreateOrder:
             headers={"Authorization": access_token},
             json={"ingredients": [invalid_ingredient_id]}
         )
-        assert response.status_code == 500
+        assert response.status_code == 500, f"Unexpected status: {response.text}"
+        assert response.json().get("message") == "Internal Server Error", "Expected error message not received"

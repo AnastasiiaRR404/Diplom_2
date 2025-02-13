@@ -28,3 +28,4 @@ class TestGetUserOrders:
 
         assert response.status_code == 401
         assert response.json().get("success") is False
+        assert response.json().get("message") == "You should be authorised"
